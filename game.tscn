@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwp0cd6lucu30"]
+
+[ext_resource type="PackedScene" uid="uid://bwwark8dunand" path="res://map.tscn" id="1_1g5yq"]
+[ext_resource type="Script" path="res://game.gd" id="1_31ory"]
+[ext_resource type="PackedScene" uid="uid://26kdu2s5ab8" path="res://player/character.tscn" id="2_qpkfi"]
+[ext_resource type="PackedScene" uid="uid://db20a5533g42w" path="res://items/Key.tscn" id="4_mhtwl"]
+
+[sub_resource type="Gradient" id="Gradient_anovc"]
+colors = PackedColorArray(0.978162, 0.869056, 0.775613, 0.792157, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wvuva"]
+gradient = SubResource("Gradient_anovc")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.756881, 1)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_31ory")
+
+[node name="Map" parent="." instance=ExtResource("1_1g5yq")]
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("2_qpkfi")]
+position = Vector2(223, 133)
+scale_amount = 0.5
+move_amount = 15.0
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(1, -2)
+zoom = Vector2(3, 3)
+
+[node name="PointLight2D" type="PointLight2D" parent="Player"]
+scale = Vector2(2, 2)
+texture = SubResource("GradientTexture2D_wvuva")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.458824, 0.458824, 0.611765, 1)
+
+[node name="SpawnPoints" type="Node" parent="."]
+
+[node name="SpawnPoint1" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(82, 254)
+
+[node name="SpawnPoint2" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(301, 227)
+
+[node name="SpawnPoint3" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(444, 290)
+
+[node name="SpawnPoint4" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(377, 76)
+
+[node name="SpawnPoint5" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(212, 58)
+
+[node name="Key" parent="." instance=ExtResource("4_mhtwl")]
+position = Vector2(289, 101)
