@@ -37,7 +37,7 @@ func _generate_name() -> String:
 
 func _tick(_delta: float) -> Status:
 	var target_pos: Vector2 = blackboard.get_var(target_position_var, Vector2.ZERO)
-	if target_pos.distance_to(agent.global_position) < tolerance:
+	if target_pos.distance_to(agent.global_position) <= tolerance:
 		return SUCCESS
 
 	var speed: float = blackboard.get_var(speed_var, 10.0)
@@ -66,4 +66,6 @@ func _tick(_delta: float) -> Status:
 	var desired_velocity: Vector2 = dir.normalized() * speed
 	agent.move(desired_velocity)
 	agent.update_facing()
+
+	
 	return RUNNING

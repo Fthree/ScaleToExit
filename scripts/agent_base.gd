@@ -1,15 +1,4 @@
-#*
-#* agent_base.gd
-#* =============================================================================
-#* Copyright 2021-2024 Serhii Snitsaruk
-#*
-#* Use of this source code is governed by an MIT-style
-#* license that can be found in the LICENSE file or at
-#* https://opensource.org/licenses/MIT.
-#* =============================================================================
-#*
 extends CharacterBody2D
-## Base agent script that is shared by all agents.
 
 signal death
 
@@ -30,6 +19,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	_post_physics_process.call_deferred()
 
+#if the agent hasn't moved, lerp that beotch
 func _post_physics_process() -> void:
 	if not _moved_this_frame:
 		velocity = lerp(velocity, Vector2.ZERO, 0.5)
@@ -74,10 +64,10 @@ func _damaged(_amount: float, knockback: Vector2) -> void:
 	if hsm and not _is_dead:
 		hsm.set_active(true)
 
-func move(p_velocity: Vector2) -> void:
+func move(p_velocity: Vector2) -> bool:
 	velocity = lerp(velocity, p_velocity, 0.2)
-	move_and_slide()
 	_moved_this_frame = true
+	return move_and_slide()
 
 ## Push agent in the knockback direction for the specified number of physics frames.
 func apply_knockback(knockback: Vector2, frames: int = 10) -> void:

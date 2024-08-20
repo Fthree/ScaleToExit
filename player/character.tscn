@@ -1,15 +1,14 @@
-[gd_scene load_steps=42 format=3 uid="uid://26kdu2s5ab8"]
+[gd_scene load_steps=40 format=3 uid="uid://26kdu2s5ab8"]
 
 [ext_resource type="Script" path="res://player/character.gd" id="1_otyc1"]
-[ext_resource type="Texture2D" uid="uid://d4d6uw5jmara8" path="res://assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Idle.png" id="1_sgikh"]
-[ext_resource type="Texture2D" uid="uid://1wsdws2xn3bq" path="res://assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Attack01.png" id="2_rps37"]
+[ext_resource type="Texture2D" uid="uid://d4d6uw5jmara8" path="res://assets/characters/100x100/Armored Axeman/Armored Axeman/Armored Axeman-Idle.png" id="1_sgikh"]
+[ext_resource type="Texture2D" uid="uid://1wsdws2xn3bq" path="res://assets/characters/100x100/Armored Axeman/Armored Axeman/Armored Axeman-Attack01.png" id="2_rps37"]
 [ext_resource type="Script" path="res://player/states/idle_state.gd" id="3_0kajg"]
-[ext_resource type="Texture2D" uid="uid://btaf8th64u1l4" path="res://assets/Tiny RPG Character Asset Pack v1.03 -Full 20 Characters/Characters(100x100)/Armored Axeman/Armored Axeman/Armored Axeman-Walk.png" id="3_pdeai"]
+[ext_resource type="Texture2D" uid="uid://btaf8th64u1l4" path="res://assets/characters/100x100/Armored Axeman/Armored Axeman/Armored Axeman-Walk.png" id="3_pdeai"]
+[ext_resource type="Script" path="res://scripts/hitscalebox.gd" id="5_0e3uv"]
 [ext_resource type="Script" path="res://player/states/move_state.gd" id="5_8k3ac"]
-[ext_resource type="Script" path="res://scripts/hitbox.gd" id="5_ug7sy"]
 [ext_resource type="Script" path="res://player/states/attack_state.gd" id="7_few8x"]
 [ext_resource type="Script" path="res://scripts/health.gd" id="9_1egxm"]
-[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="10_pwrt6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vb7ny"]
 atlas = ExtResource("2_rps37")
@@ -341,11 +340,8 @@ _data = {
 "move": SubResource("Animation_w0ees")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hi6ph"]
-radius = 4.0
-height = 14.0
-
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
+collision_mask = 11
 script = ExtResource("1_otyc1")
 
 [node name="Root" type="Node2D" parent="."]
@@ -356,15 +352,12 @@ sprite_frames = SubResource("SpriteFrames_ex6ay")
 animation = &"attack"
 autoplay = "idle"
 
-[node name="Hitbox" type="Area2D" parent="Root/Sprite2D"]
-visible = false
+[node name="Hitbox" type="Area2D" parent="Root/Sprite2D" node_paths=PackedStringArray("root")]
 position = Vector2(8, -2)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("5_ug7sy")
-damage = 2.0
-knockback_enabled = true
-knockback_strength = 3.0
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("5_0e3uv")
+root = NodePath("../..")
 metadata/_edit_group_ = true
 
 [node name="Collider" type="CollisionShape2D" parent="Root/Sprite2D/Hitbox"]
@@ -381,9 +374,8 @@ root = NodePath("../../Root")
 animation_player = NodePath("../../AnimationPlayer")
 idle_animation = &"idle"
 
-[node name="MoveState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("root", "animation_player")]
+[node name="MoveState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("animation_player")]
 script = ExtResource("5_8k3ac")
-root = NodePath("../../Root")
 animation_player = NodePath("../../AnimationPlayer")
 animation = &"move"
 
@@ -407,17 +399,5 @@ playback_auto_capture = false
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("9_1egxm")
-
-[node name="Hurtbox" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 0
-script = ExtResource("10_pwrt6")
-
-[node name="Collider" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(-1, -1)
-shape = SubResource("CapsuleShape2D_hi6ph")
-disabled = true
-debug_color = Color(0.634602, 0.520149, 0.250713, 0.42)
 
 [connection signal="active_state_changed" from="LimboHSM" to="." method="_on_limbo_hsm_active_state_changed"]

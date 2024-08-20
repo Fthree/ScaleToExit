@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://vssbjsbaq1v5"]
+
+[ext_resource type="PackedScene" uid="uid://dwp0cd6lucu30" path="res://game.tscn" id="1_m4uyw"]
+[ext_resource type="PackedScene" uid="uid://crf4xj87xbpib" path="res://UI.tscn" id="2_ir30w"]
+
+[node name="GameManager" type="Node2D"]
+
+[node name="Game" parent="." instance=ExtResource("1_m4uyw")]
+
+[node name="UI" parent="." instance=ExtResource("2_ir30w")]
+scale = Vector2(4, 4)
+transform = Transform2D(4, 0, 0, 4, 0, 0)

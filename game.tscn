@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwp0cd6lucu30"]
+[gd_scene load_steps=9 format=3 uid="uid://dwp0cd6lucu30"]
 
 [ext_resource type="PackedScene" uid="uid://bwwark8dunand" path="res://map.tscn" id="1_1g5yq"]
 [ext_resource type="Script" path="res://game.gd" id="1_31ory"]
 [ext_resource type="PackedScene" uid="uid://26kdu2s5ab8" path="res://player/character.tscn" id="2_qpkfi"]
 [ext_resource type="PackedScene" uid="uid://db20a5533g42w" path="res://items/Key.tscn" id="4_mhtwl"]
+[ext_resource type="PackedScene" uid="uid://dnkequ507lljs" path="res://enemies/skeleton_enemy_basic.tscn" id="5_3nck1"]
+[ext_resource type="PackedScene" uid="uid://cb16wouyskjn3" path="res://doorway.tscn" id="6_5x4ef"]
 
 [sub_resource type="Gradient" id="Gradient_anovc"]
 colors = PackedColorArray(0.978162, 0.869056, 0.775613, 0.792157, 0, 0, 0, 0)
@@ -19,39 +21,45 @@ script = ExtResource("1_31ory")
 
 [node name="Map" parent="." instance=ExtResource("1_1g5yq")]
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("2_qpkfi")]
-position = Vector2(223, 133)
-scale_amount = 0.5
+[node name="CanvasModulate" type="CanvasModulate" parent="Map"]
+color = Color(0.458824, 0.458824, 0.611765, 1)
+
+[node name="WayPoints" type="Node2D" parent="."]
+
+[node name="waypoint" type="Marker2D" parent="WayPoints" groups=["waypoint"]]
+position = Vector2(116, 118)
+
+[node name="waypoint2" type="Marker2D" parent="WayPoints" groups=["waypoint"]]
+position = Vector2(52, 135)
+
+[node name="waypoint3" type="Marker2D" parent="WayPoints" groups=["waypoint"]]
+position = Vector2(161, 145)
+
+[node name="Elements" type="Node" parent="."]
+
+[node name="Player" parent="Elements" instance=ExtResource("2_qpkfi")]
+y_sort_enabled = true
+position = Vector2(72, 162)
+scale_amount = 0.2
 move_amount = 15.0
+scale_duration = 0.05
 metadata/_edit_group_ = true
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(1, -2)
-zoom = Vector2(3, 3)
-
-[node name="PointLight2D" type="PointLight2D" parent="Player"]
+[node name="PointLight2D" type="PointLight2D" parent="Elements/Player"]
 scale = Vector2(2, 2)
 texture = SubResource("GradientTexture2D_wvuva")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.458824, 0.458824, 0.611765, 1)
+[node name="Camera2D" type="Camera2D" parent="Elements/Player"]
+position = Vector2(0, -2)
+zoom = Vector2(3, 3)
 
-[node name="SpawnPoints" type="Node" parent="."]
+[node name="enemy" parent="Elements" instance=ExtResource("5_3nck1")]
+position = Vector2(97, 159)
+collision_mask = 15
 
-[node name="SpawnPoint1" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(82, 254)
+[node name="Key" parent="Elements" instance=ExtResource("4_mhtwl")]
+position = Vector2(102, 112)
 
-[node name="SpawnPoint2" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(301, 227)
-
-[node name="SpawnPoint3" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(444, 290)
-
-[node name="SpawnPoint4" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(377, 76)
-
-[node name="SpawnPoint5" type="Marker2D" parent="SpawnPoints"]
-position = Vector2(212, 58)
-
-[node name="Key" parent="." instance=ExtResource("4_mhtwl")]
-position = Vector2(289, 101)
+[node name="Doorway" parent="Elements" instance=ExtResource("6_5x4ef")]
+position = Vector2(104, 184)
+collision_mask = 2

@@ -1,9 +1,9 @@
 extends "res://scripts/agent_base.gd"
 
 @export var scale_amount: float = 1
-@export var max_scale: float = 1.5
+@export var max_scale: float = 1.2
 @export var move_amount: float = 10
-@export var scale_duration: float = 0.2
+@export var scale_duration: float = 0.1
 var scale_clamp: float = .1
 
 @onready var hsm: LimboHSM = $LimboHSM
@@ -22,48 +22,50 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
     super._physics_process(delta)
-    _handle_input()
+    _handle_input_scaling()
     _handle_motion_and_scale(delta)
 
-func _handle_input() -> void:
+func _handle_input_scaling() -> void:
     if hsm.get_active_state() != attack_state:
-        if Input.is_key_pressed(KEY_W):
+        if Input.is_key_pressed(KEY_UP):
             if root.scale.y < max_scale:
                 tween_scale(Vector2(0, scale_amount), scale_duration)
 
-        if Input.is_key_pressed(KEY_S):
+        if Input.is_key_pressed(KEY_DOWN):
             if root.scale.y > -max_scale:
                 tween_scale(Vector2(0, -scale_amount), scale_duration)
 
-        if Input.is_key_pressed(KEY_A):
+        if Input.is_key_pressed(KEY_LEFT):
             if root.scale.x > -max_scale:
                 tween_scale(Vector2(-scale_amount, 0), scale_duration)
 
-        if Input.is_key_pressed(KEY_D):
+        if Input.is_key_pressed(KEY_RIGHT):
             if root.scale.x < max_scale:
                 tween_scale(Vector2(scale_amount, 0), scale_duration)
 
         if Input.is_key_pressed(KEY_R):
             reset_scale()
 
-        if Input.is_key_pressed(KEY_SPACE):
-            if root.scale.x > max_scale:
-                motion.x += root.scale.x * move_amount
-                tween_scale(Vector2.ZERO, scale_duration, Vector2(1, root.scale.y))
-            elif root.scale.x < -max_scale:
-                motion.x += root.scale.x * move_amount
-                tween_scale(Vector2.ZERO, scale_duration, Vector2(-1, root.scale.y))
-
-            if root.scale.y > max_scale:
-                motion.y -= root.scale.y * move_amount
-                tween_scale(Vector2.ZERO, scale_duration, Vector2(root.scale.x, 1))
-
-            elif root.scale.y < -max_scale:
-                motion.y -= root.scale.y * move_amount
-                tween_scale(Vector2.ZERO, scale_duration, Vector2(root.scale.x, -1))
-
         if Input.is_key_pressed(KEY_F):
             hsm.dispatch("attack")
+
+
+func _handle_scale_motion():
+    if Input.is_key_pressed(KEY_SPACE):
+        if root.scale.x > max_scale:
+            motion.x += root.scale.x * move_amount
+            tween_scale(Vector2.ZERO, scale_duration, Vector2(1, root.scale.y))
+        elif root.scale.x < -max_scale:
+            motion.x += root.scale.x * move_amount
+            tween_scale(Vector2.ZERO, scale_duration, Vector2(-1, root.scale.y))
+
+        if root.scale.y > max_scale:
+            motion.y -= root.scale.y * move_amount
+            tween_scale(Vector2.ZERO, scale_duration, Vector2(root.scale.x, 1))
+
+        elif root.scale.y < -max_scale:
+            motion.y -= root.scale.y * move_amount
+            tween_scale(Vector2.ZERO, scale_duration, Vector2(root.scale.x, -1))
 
 func reset_scale() -> void:
     tween_scale(Vector2.ZERO, scale_duration, Vector2(1, 1))
