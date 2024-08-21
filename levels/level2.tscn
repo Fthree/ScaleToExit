@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://61a8wlko7phf"]
+
+[ext_resource type="PackedScene" uid="uid://bwwark8dunand" path="res://levels/map_level2.tscn" id="1_jqae5"]
+[ext_resource type="PackedScene" uid="uid://26kdu2s5ab8" path="res://player/character.tscn" id="2_tox1j"]
+[ext_resource type="PackedScene" uid="uid://dnkequ507lljs" path="res://enemies/skeleton_enemy_basic.tscn" id="3_gatv6"]
+[ext_resource type="PackedScene" uid="uid://db20a5533g42w" path="res://items/Key.tscn" id="4_4kxsf"]
+[ext_resource type="PackedScene" uid="uid://bpg50sjh6boqv" path="res://enemies/skeleton_enemy_basic_item2.tscn" id="4_y4aiv"]
+[ext_resource type="PackedScene" uid="uid://cb16wouyskjn3" path="res://items/doorway/doorway.tscn" id="5_5aw5d"]
+[ext_resource type="PackedScene" uid="uid://crfv0bktf0jsb" path="res://items/Key2.tscn" id="7_3jksg"]
+
+[sub_resource type="Gradient" id="Gradient_anovc"]
+colors = PackedColorArray(0.978162, 0.869056, 0.775613, 0.792157, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wvuva"]
+gradient = SubResource("Gradient_anovc")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.756881, 1)
+
+[node name="Game" type="Node"]
+
+[node name="Map" parent="." instance=ExtResource("1_jqae5")]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="Map"]
+color = Color(0.458824, 0.458824, 0.611765, 1)
+
+[node name="WayPoints2" type="Node2D" parent="."]
+
+[node name="waypoint" type="Marker2D" parent="WayPoints2" groups=["waypoint2"]]
+position = Vector2(103, 132)
+
+[node name="waypoint3" type="Marker2D" parent="WayPoints2" groups=["waypoint2"]]
+position = Vector2(165, 60)
+
+[node name="waypoint2" type="Marker2D" parent="WayPoints2" groups=["waypoint2"]]
+position = Vector2(47, 84)
+
+[node name="WayPoints" type="Node2D" parent="."]
+
+[node name="waypoint" type="Marker2D" parent="WayPoints" groups=["waypoint"]]
+position = Vector2(120, 94)
+
+[node name="waypoint3" type="Marker2D" parent="WayPoints" groups=["waypoint"]]
+position = Vector2(161, 145)
+
+[node name="waypoint2" type="Marker2D" parent="WayPoints" groups=["waypoint"]]
+position = Vector2(52, 135)
+
+[node name="Elements" type="Node" parent="."]
+
+[node name="Player" parent="Elements" instance=ExtResource("2_tox1j")]
+y_sort_enabled = true
+position = Vector2(72, 162)
+scale_amount = 0.2
+move_amount = 15.0
+scale_duration = 0.05
+metadata/_edit_group_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="Elements/Player"]
+scale = Vector2(2, 2)
+texture = SubResource("GradientTexture2D_wvuva")
+
+[node name="Camera2D" type="Camera2D" parent="Elements/Player"]
+position = Vector2(0, -2)
+zoom = Vector2(3, 3)
+
+[node name="enemy" parent="Elements" instance=ExtResource("3_gatv6")]
+position = Vector2(35, 117)
+
+[node name="enemy2" parent="Elements" instance=ExtResource("4_y4aiv")]
+position = Vector2(158, 116)
+
+[node name="Doorway" parent="Elements" instance=ExtResource("5_5aw5d")]
+position = Vector2(40, 184)
+collision_mask = 2
+
+[node name="Doorway2" parent="Elements" instance=ExtResource("5_5aw5d")]
+position = Vector2(168, 184)
+collision_mask = 2
+expected = 1
+
+[node name="Keys" type="Node" parent="Elements"]
+
+[node name="Key" parent="Elements/Keys" groups=["item"] instance=ExtResource("4_4kxsf")]
+position = Vector2(40, 258)
+
+[node name="Key2" parent="Elements/Keys" groups=["item2"] instance=ExtResource("7_3jksg")]
+position = Vector2(168, 264)

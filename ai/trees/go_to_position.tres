@@ -23,8 +23,6 @@ animation_name = &"idle"
 blend = 0.0
 
 [sub_resource type="BTRandomWait" id="BTRandomWait_xlud8"]
-min_duration = 2.0
-max_duration = 3.0
 
 [sub_resource type="BTSequence" id="BTSequence_yhjh1"]
 custom_name = "Pause before action"

@@ -1,4 +1,5 @@
 extends StaticBody2D
+class_name Item
 
 signal picked_up
 
@@ -7,6 +8,7 @@ signal picked_up
 @onready var root: Node2D = $Root
 
 func _ready() -> void:
+	animation_player.play("item")
 	if pickup:
 		pickup.picked.connect(_picked_up_item)
 	

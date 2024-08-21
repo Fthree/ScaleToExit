@@ -1,0 +1,235 @@
+[gd_scene load_steps=21 format=3 uid="uid://cb16wouyskjn3"]
+
+[ext_resource type="Texture2D" uid="uid://usyvh20txxvs" path="res://assets/items/gate.png" id="1_8dlvs"]
+[ext_resource type="Script" path="res://items/doorway/doorway.gd" id="1_aog6e"]
+[ext_resource type="Script" path="res://scripts/checkbox.gd" id="2_u4qge"]
+[ext_resource type="Script" path="res://items/doorway/state/shut_state.gd" id="4_uj8uc"]
+[ext_resource type="Script" path="res://items/doorway/state/opened_state.gd" id="5_27yyv"]
+[ext_resource type="Script" path="res://scripts/check_scale.gd" id="5_qk0w2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0ycw"]
+atlas = ExtResource("1_8dlvs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpxqm"]
+atlas = ExtResource("1_8dlvs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aehbb"]
+atlas = ExtResource("1_8dlvs")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vc3yk"]
+atlas = ExtResource("1_8dlvs")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tlmt"]
+atlas = ExtResource("1_8dlvs")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb4a8"]
+atlas = ExtResource("1_8dlvs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_itajt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0ycw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpxqm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aehbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vc3yk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tlmt")
+}],
+"loop": true,
+"name": &"Open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb4a8")
+}],
+"loop": true,
+"name": &"Shut",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_rcoox"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Collider:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_gdwlp"]
+resource_name = "open"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Open"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Collider:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_3gv4f"]
+resource_name = "shut"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Shut"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8k8o8"]
+_data = {
+"RESET": SubResource("Animation_rcoox"),
+"open": SubResource("Animation_gdwlp"),
+"shut": SubResource("Animation_3gv4f")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v8nk6"]
+radius = 5.0
+height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e46ow"]
+radius = 13.0
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_t2k7y"]
+var/opened/name = &"opened"
+var/opened/type = 1
+var/opened/value = false
+var/opened/hint = 0
+var/opened/hint_string = ""
+
+[node name="Doorway" type="StaticBody2D" groups=["expected_big"]]
+position = Vector2(0, -1)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_aog6e")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_itajt")
+animation = &"Open"
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8k8o8")
+}
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(0, 3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_v8nk6")
+
+[node name="CheckBox" type="Area2D" parent="." node_paths=PackedStringArray("do_check")]
+position = Vector2(0, -3)
+collision_layer = 128
+collision_mask = 16
+script = ExtResource("2_u4qge")
+do_check = NodePath("../CheckScale")
+
+[node name="Collider" type="CollisionShape2D" parent="CheckBox"]
+z_index = 1
+position = Vector2(0, 3)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_e46ow")
+debug_color = Color(0.620427, 0.530187, 0.186516, 0.42)
+
+[node name="LimboHSM" type="LimboHSM" parent="."]
+blackboard_plan = SubResource("BlackboardPlan_t2k7y")
+
+[node name="ShutState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("4_uj8uc")
+animation_player = NodePath("../../AnimationPlayer")
+animation = &"shut"
+
+[node name="OpenState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("5_27yyv")
+animation_player = NodePath("../../AnimationPlayer")
+animation = &"open"
+
+[node name="CheckScale" type="Node" parent="."]
+script = ExtResource("5_qk0w2")

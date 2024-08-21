@@ -10,4 +10,5 @@ func _ready() -> void:
 	area_entered.connect(do_action)
 
 func do_action(source: Box) -> void:
-	pickupSignal.do_pickup(source)
+	if source.owner != owner:
+		pickupSignal.do_pickup(source)

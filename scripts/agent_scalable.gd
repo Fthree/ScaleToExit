@@ -42,21 +42,21 @@ func is_good_position(p_position: Vector2) -> bool:
 ## Face specified direction.
 func face_dir(dir: float) -> void:
 	if dir > 0.0 and root.scale.x < 0.0:
-		root.scale.x = 1.0;
+		root.scale.x = abs(root.scale.x)
 		_frames_since_facing_update = 0
-	if dir < 0.0 and root.scale.x > 0.0:
-		root.scale.x = -1.0;
+	elif dir < 0.0 and root.scale.x > 0.0:
+		root.scale.x = -abs(root.scale.x)
 		_frames_since_facing_update = 0
 		
 ## When agent is scaled up...
 func _scale_up() -> void:
-	if root.scale < Vector2(1.5, 1.5):
-		root.scale += Vector2(.5, .5)
+	if abs(root.scale.x) < 1.5 and abs(root.scale.y) < 1.5:
+		root.scale += Vector2(.5 * sign(root.scale.x), .5)
 
 ## When agent is scaled down...
 func _scale_down() -> void:
-	if root.scale > Vector2(.5, .5):
-		root.scale -= Vector2(.5, .5)
+	if abs(root.scale.x) > 0.5 and abs(root.scale.y) > 0.5:
+		root.scale -= Vector2(.5 * sign(root.scale.x), .5)
 
 func move(p_velocity: Vector2) -> bool:
 	velocity = lerp(velocity, p_velocity, 0.2)

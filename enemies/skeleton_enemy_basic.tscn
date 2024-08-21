@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dnkequ507lljs"]
+[gd_scene load_steps=49 format=3 uid="uid://dnkequ507lljs"]
 
 [ext_resource type="Texture2D" uid="uid://cakvu4ltcwqsa" path="res://assets/characters/100x100/Skeleton/Skeleton/Skeleton-Idle.png" id="1_4x3ha"]
 [ext_resource type="Script" path="res://scripts/agent_scalable.gd" id="1_l5nuu"]
@@ -241,8 +241,8 @@ animations = [{
 "speed": 12.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tkenm"]
-radius = 5.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w4ioo"]
+radius = 6.0
 height = 12.0
 
 [sub_resource type="Animation" id="Animation_40kii"]
@@ -441,8 +441,13 @@ _data = {
 "walk": SubResource("Animation_2er15")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tkenm"]
+radius = 9.0
+height = 18.0
+
 [node name="enemy" type="CharacterBody2D"]
-collision_mask = 11
+collision_layer = 16
+collision_mask = 47
 script = ExtResource("1_l5nuu")
 
 [node name="BTPlayer" type="BTPlayer" parent="."]
@@ -458,9 +463,8 @@ animation = &"walk"
 frame = 1
 
 [node name="Collider" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(1, 0)
-shape = SubResource("CapsuleShape2D_tkenm")
+shape = SubResource("CapsuleShape2D_w4ioo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -470,12 +474,14 @@ libraries = {
 [node name="Scale" type="Node" parent="."]
 script = ExtResource("8_uc0lg")
 
-[node name="ScaleBox" type="Area2D" parent="." node_paths=PackedStringArray("scaled")]
-collision_layer = 16
-collision_mask = 32
+[node name="ScaleBox" type="Area2D" parent="." node_paths=PackedStringArray("root", "scaled") groups=["agent"]]
+collision_layer = 272
+collision_mask = 36
 script = ExtResource("9_8vuqs")
+root = NodePath("../Root")
 scaled = NodePath("../Scale")
 
 [node name="Collider" type="CollisionShape2D" parent="ScaleBox"]
+position = Vector2(2, -2)
 shape = SubResource("CapsuleShape2D_tkenm")
 debug_color = Color(0.633063, 0.521114, 0.247214, 0.42)
