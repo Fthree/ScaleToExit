@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1724239871|358729302';
+const CACHE_VERSION = '1724240061|549593348';
 /** @type {string} */
 const CACHE_PREFIX = 'ScaleToExit-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
@@ -17,7 +17,7 @@ const ENSURE_CROSSORIGIN_ISOLATION_HEADERS = true;
 const CACHED_FILES = ["index.html","index.js","index.offline.html","index.icon.png","index.apple-touch-icon.png","index.worker.js","index.audio.worklet.js"];
 // Files that we might not want the user to preload, and will only be cached on first load.
 /** @type {string[]} */
-const CACHABLE_FILES = ["index.wasm","index.pck","index.side.wasm","liblimboai.web.template_debug.wasm32.wasm"];
+const CACHABLE_FILES = ["index.wasm","index.pck","index.side.wasm","liblimboai.web.template_release.wasm32.wasm"];
 const FULL_CACHE = CACHED_FILES.concat(CACHABLE_FILES);
 
 self.addEventListener('install', (event) => {
