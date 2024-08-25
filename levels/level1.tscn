@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://dwp0cd6lucu30"]
 
 [ext_resource type="PackedScene" uid="uid://beeatp2hup5tg" path="res://levels/map_level1.tscn" id="1_1g5yq"]
-[ext_resource type="PackedScene" uid="uid://26kdu2s5ab8" path="res://player/character.tscn" id="2_qpkfi"]
-[ext_resource type="PackedScene" uid="uid://db20a5533g42w" path="res://items/Key.tscn" id="4_mhtwl"]
-[ext_resource type="PackedScene" uid="uid://dnkequ507lljs" path="res://enemies/skeleton_enemy_basic.tscn" id="5_3nck1"]
+[ext_resource type="PackedScene" uid="uid://26kdu2s5ab8" path="res://player/player.tscn" id="2_qpkfi"]
+[ext_resource type="PackedScene" uid="uid://db20a5533g42w" path="res://items/key/Key.tscn" id="4_mhtwl"]
+[ext_resource type="PackedScene" uid="uid://dnkequ507lljs" path="res://agents/skeleton_enemy_basic.tscn" id="5_3nck1"]
 [ext_resource type="PackedScene" uid="uid://cb16wouyskjn3" path="res://items/doorway/doorway.tscn" id="6_5x4ef"]
 
 [sub_resource type="Gradient" id="Gradient_anovc"]
@@ -51,12 +51,13 @@ texture = SubResource("GradientTexture2D_wvuva")
 position = Vector2(0, -2)
 zoom = Vector2(3, 3)
 
-[node name="enemy" parent="Elements" instance=ExtResource("5_3nck1")]
+[node name="enemy" parent="Elements" node_paths=PackedStringArray("target_item_group") instance=ExtResource("5_3nck1")]
 position = Vector2(103, 114)
+target_item_group = NodePath("../Keys/Key")
 
 [node name="Keys" type="Node" parent="Elements"]
 
-[node name="Key" parent="Elements/Keys" groups=["item"] instance=ExtResource("4_mhtwl")]
+[node name="Key" parent="Elements/Keys" groups=["key1"] instance=ExtResource("4_mhtwl")]
 position = Vector2(103, 235)
 
 [node name="Doorway" parent="Elements" instance=ExtResource("6_5x4ef")]

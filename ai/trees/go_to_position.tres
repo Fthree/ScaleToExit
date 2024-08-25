@@ -1,6 +1,6 @@
 [gd_resource type="BehaviorTree" load_steps=36 format=3 uid="uid://cjv4ymkskv57o"]
 
-[ext_resource type="Script" path="res://ai/tasks/get_first_in_group.gd" id="1_q4t3n"]
+[ext_resource type="Script" path="res://ai/tasks/get_first_in_group_var.gd" id="1_1sc37"]
 [ext_resource type="Script" path="res://ai/tasks/face_target.gd" id="2_5ggci"]
 [ext_resource type="Script" path="res://ai/tasks/select_target_pos.gd" id="2_b1xrh"]
 [ext_resource type="Script" path="res://ai/tasks/arrive_pos.gd" id="3_c4le6"]
@@ -12,6 +12,11 @@ var/speed/type = 3
 var/speed/value = 400.0
 var/speed/hint = 1
 var/speed/hint_string = "10,1000,10"
+var/group/name = &"group"
+var/group/type = 4
+var/group/value = ""
+var/group/hint = 0
+var/group/hint_string = "item,item2"
 
 [sub_resource type="BBNode" id="BBNode_nrd4b"]
 saved_value = NodePath("AnimationPlayer")
@@ -28,9 +33,9 @@ blend = 0.0
 custom_name = "Pause before action"
 children = [SubResource("BTPlayAnimation_qiw21"), SubResource("BTRandomWait_xlud8")]
 
-[sub_resource type="BTAction" id="BTAction_to68a"]
-script = ExtResource("1_q4t3n")
-group = &"item"
+[sub_resource type="BTAction" id="BTAction_ranb5"]
+script = ExtResource("1_1sc37")
+group_var = &"group"
 output_var = &"target"
 
 [sub_resource type="BTAction" id="BTAction_f25l4"]
@@ -71,7 +76,7 @@ children = [SubResource("BTTimeLimit_v7hoe")]
 
 [sub_resource type="BTSequence" id="BTSequence_h3bay"]
 custom_name = "Go to first waypoint"
-children = [SubResource("BTAction_to68a"), SubResource("BTAction_f25l4"), SubResource("BTRandomWait_6ejre"), SubResource("BTAction_3h5pa"), SubResource("BTPlayAnimation_ole2a"), SubResource("BTInvert_m5l87")]
+children = [SubResource("BTAction_ranb5"), SubResource("BTAction_f25l4"), SubResource("BTRandomWait_6ejre"), SubResource("BTAction_3h5pa"), SubResource("BTPlayAnimation_ole2a"), SubResource("BTInvert_m5l87")]
 
 [sub_resource type="BBNode" id="BBNode_tfnkj"]
 saved_value = NodePath("AnimationPlayer")

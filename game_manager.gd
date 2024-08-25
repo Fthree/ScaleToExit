@@ -16,23 +16,25 @@ var ui: CanvasLayer
 
 func _ready():
 
-    level = levels[levelCount].instantiate()
-    ui = uis[levelCount].instantiate()
-    add_child(level)
-    add_child(ui)
-    keys_available = level.get_node("Elements").get_node("Keys").get_children() as Array
-    for key in keys_available:
-        key.picked_up.connect(_picked_up_key)
+	level = levels[levelCount].instantiate()
+	ui = uis[levelCount].instantiate()
+	add_child(level)
+	add_child(ui)
+	keys_available = level.get_node("Elements").get_node("Keys").get_children() as Array
+	for key in keys_available:
+		key.picked_up.connect(_picked_up_key)
 
 func _picked_up_key():
-    keys_found += 1
-    if keys_found >= keys_available.size():
-        levelCount+=1
-        remove_child(level)
-        remove_child(ui)
-        level = levels[levelCount].instantiate()
-        ui = uis[levelCount].instantiate()
-        add_child(level)
-        add_child(ui)
-        keys_found = 0
-        
+	keys_found += 1
+	if keys_found >= keys_available.size():
+		levelCount+=1
+		remove_child(level)
+		remove_child(ui)
+		if levelCount >= levels.size():
+			levelCount = 0
+		level = levels[levelCount].instantiate()
+		ui = uis[levelCount].instantiate()
+		add_child(level)
+		add_child(ui)
+		keys_found = 0
+		

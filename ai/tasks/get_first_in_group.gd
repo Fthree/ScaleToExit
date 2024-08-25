@@ -19,7 +19,6 @@ extends BTAction
 ## Blackboard variable in which the task will store the acquired node.
 @export var output_var: StringName = &"target"
 
-
 func _generate_name() -> String:
 	return "GetFirstNodeInGroup \"%s\"  ➜%s" % [
 		group,

@@ -1,7 +1,7 @@
 [gd_scene load_steps=75 format=3 uid="uid://crf4xj87xbpib"]
 
 [ext_resource type="Texture2D" uid="uid://usyvh20txxvs" path="res://assets/items/gate.png" id="1_c248i"]
-[ext_resource type="Script" path="res://scripts/ui.gd" id="1_jm7e0"]
+[ext_resource type="Script" path="res://UI/ui.gd" id="1_jm7e0"]
 [ext_resource type="Texture2D" uid="uid://b1lncgcqtklw0" path="res://assets/characters/100x100/Skeleton/Skeleton/Skeleton-Attack01.png" id="2_c5gsh"]
 [ext_resource type="Texture2D" uid="uid://dtx6a743uqop8" path="res://assets/characters/100x100/Skeleton/Skeleton/Skeleton-Death.png" id="3_51pos"]
 [ext_resource type="Texture2D" uid="uid://dqmly7u3y0a16" path="res://assets/characters/100x100/Skeleton/Skeleton/Skeleton-Hurt.png" id="4_qofa0"]

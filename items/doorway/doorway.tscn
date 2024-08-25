@@ -1,11 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://cb16wouyskjn3"]
+[gd_scene load_steps=18 format=3 uid="uid://cb16wouyskjn3"]
 
 [ext_resource type="Texture2D" uid="uid://usyvh20txxvs" path="res://assets/items/gate.png" id="1_8dlvs"]
 [ext_resource type="Script" path="res://items/doorway/doorway.gd" id="1_aog6e"]
-[ext_resource type="Script" path="res://scripts/checkbox.gd" id="2_u4qge"]
-[ext_resource type="Script" path="res://items/doorway/state/shut_state.gd" id="4_uj8uc"]
-[ext_resource type="Script" path="res://items/doorway/state/opened_state.gd" id="5_27yyv"]
-[ext_resource type="Script" path="res://scripts/check_scale.gd" id="5_qk0w2"]
+[ext_resource type="Script" path="res://items/state/anim_state.gd" id="5_27yyv"]
+[ext_resource type="PackedScene" uid="uid://boaxkcvmo0fvr" path="res://sensors/proximity_sensor.tscn" id="5_ylcwf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q0ycw"]
 atlas = ExtResource("1_8dlvs")
@@ -169,9 +167,6 @@ _data = {
 radius = 5.0
 height = 24.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e46ow"]
-radius = 13.0
-
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_t2k7y"]
 var/opened/name = &"opened"
 var/opened/type = 1
@@ -179,7 +174,7 @@ var/opened/value = false
 var/opened/hint = 0
 var/opened/hint_string = ""
 
-[node name="Doorway" type="StaticBody2D" groups=["expected_big"]]
+[node name="Doorway" type="StaticBody2D"]
 position = Vector2(0, -1)
 collision_layer = 2
 collision_mask = 0
@@ -204,25 +199,14 @@ position = Vector2(0, 3)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_v8nk6")
 
-[node name="CheckBox" type="Area2D" parent="." node_paths=PackedStringArray("do_check")]
-position = Vector2(0, -3)
-collision_layer = 128
-collision_mask = 16
-script = ExtResource("2_u4qge")
-do_check = NodePath("../CheckScale")
-
-[node name="Collider" type="CollisionShape2D" parent="CheckBox"]
-z_index = 1
-position = Vector2(0, 3)
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_e46ow")
-debug_color = Color(0.620427, 0.530187, 0.186516, 0.42)
+[node name="ProximitySensor" parent="." instance=ExtResource("5_ylcwf")]
+scale = Vector2(1.2, 1.2)
 
 [node name="LimboHSM" type="LimboHSM" parent="."]
 blackboard_plan = SubResource("BlackboardPlan_t2k7y")
 
 [node name="ShutState" type="LimboState" parent="LimboHSM" node_paths=PackedStringArray("animation_player")]
-script = ExtResource("4_uj8uc")
+script = ExtResource("5_27yyv")
 animation_player = NodePath("../../AnimationPlayer")
 animation = &"shut"
 
@@ -231,5 +215,4 @@ script = ExtResource("5_27yyv")
 animation_player = NodePath("../../AnimationPlayer")
 animation = &"open"
 
-[node name="CheckScale" type="Node" parent="."]
-script = ExtResource("5_qk0w2")
+[connection signal="in_proximity" from="ProximitySensor" to="." method="_on_proximity_sensor_in_proximity"]

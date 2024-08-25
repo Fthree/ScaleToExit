@@ -11,9 +11,10 @@ func _generate_name() -> String:
 		LimboUtility.decorate_var(position_var)]
 
 func _tick(_delta: float) -> Status:
-	var target := blackboard.get_var(target_var) as Node2D
-	if not is_instance_valid(target):
-		return FAILURE
-	blackboard.set_var(position_var, target.position)
+	if target_var and blackboard:
+		var target := blackboard.get_var(target_var) as Node2D
+		if not is_instance_valid(target):
+			return FAILURE
+		blackboard.set_var(position_var, target.position)
+		return SUCCESS
 	return SUCCESS
-
